@@ -1,0 +1,15 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your FitBuddy Plan</title><link rel="stylesheet" href="/static/style.css"></head><body><main class="container">
+<header class="top"><a class="brand" href="/">FitBuddy<span>.</span></a><a href="/view-all-users">Coach dashboard</a></header>
+{% if message %}<div class="alert success">{{ message }}</div>{% endif %}{% if error %}<div class="alert error">{{ error }}</div>{% endif %}
+<section class="hero"><p class="eyebrow">YOUR PLAN IS READY</p><h1>Let's get moving, <span>{{ user.username }}.</span></h1>
+<p class="muted">{{ user.goal }} · {{ user.intensity }} intensity · User ID: {{ user.user_id }}</p></section>
+<section class="panel"><h2>7-day workout plan</h2><pre class="plan">{{ workout_plan }}</pre></section>
+<section class="panel tip"><p class="eyebrow">FUEL & RECOVER</p><h2>Nutrition / recovery tip</h2><p>{{ nutrition_tip }}</p></section>
+<section class="panel"><h2>Refine your plan</h2><p class="muted">Tell FitBuddy what you'd like to change.</p>
+<form method="post" action="/submit-feedback"><input type="hidden" name="user_id" value="{{ user.user_id }}">
+<label>Your feedback<textarea name="feedback" required minlength="3" maxlength="1000" placeholder="Example: Please include more stretching and an extra rest day."></textarea></label>
+<button class="button" type="submit">Update my plan →</button></form></section>
+<a class="back" href="/">← Create another plan</a>
+<p class="fineprint">Stop exercising if you feel pain, dizziness, or unusual symptoms. This plan is general information and not a substitute for professional advice.</p>
+</main></body></html>

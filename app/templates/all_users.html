@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FitBuddy | Coach dashboard</title><link rel="stylesheet" href="/static/style.css"></head><body><main class="container wide">
+<header class="top"><a class="brand" href="/">FitBuddy<span>.</span></a><a href="/">Create plan</a></header>
+<section class="hero"><p class="eyebrow">OVERVIEW</p><h1>Coach <span>dashboard.</span></h1><p class="muted">Locally stored users and their workout plan history.</p></section>
+{% if not users %}<section class="panel">No users yet. Generate a plan first.</section>{% endif %}
+{% for user in users %}<section class="panel user-card"><div class="user-heading"><div><h2>{{ user.username }}</h2><p class="muted">ID: {{ user.user_id }} · Age: {{ user.age }} · {{ user.weight }} kg · {{ user.goal }} · {{ user.intensity }}</p></div>
+<form method="post" action="/delete-user/{{ user.user_id }}" onsubmit="return confirm('Delete this user and their plans?')"><button class="button danger" type="submit">Delete</button></form></div>
+{% for plan in plans_by_user.get(user.user_id, []) %}<div class="plan-columns"><div><h3>Original plan</h3><pre class="plan small">{{ plan.original_plan }}</pre></div>
+<div><h3>Updated plan</h3><pre class="plan small">{{ plan.updated_plan or "No feedback update yet." }}</pre>
+{% if plan.feedback %}<p><strong>Feedback:</strong> {{ plan.feedback }}</p>{% endif %}</div></div>{% endfor %}</section>{% endfor %}
+<p class="fineprint">Important: this dashboard has no login in this local starter build. Do not expose it to the public internet before adding authentication and access controls.</p>
+</main></body></html>
